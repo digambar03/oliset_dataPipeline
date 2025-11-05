@@ -1,0 +1,24 @@
+from logging import exception
+
+import boto3
+from botocore.retries import bucket
+
+// Pl add access key and scecret key of user
+ACCESS_KEY = ''
+SECRET_KEY = ''
+
+local_file_path=r'C:\Users\pedan\Downloads\brazilian-ecommerce\olist_sellers_dataset.csv'
+bucket_name='big-data-project-olister'
+s3_object_key = 'brazilian-ecommerce/olist_sellers_dataset.csv'
+
+try:
+    s3 = boto3.client('s3',aws_access_key_id=ACCESS_KEY,aws_secret_access_key=SECRET_KEY)
+    # s3.create_bucket(Bucket='big-data-project-olister')
+    bucket_list=s3.list_buckets()
+    for bucket in bucket_list['Buckets']:
+        print(bucket['Name'])
+
+    s3.upload_file(local_file_path,bucket_name,s3_object_key)
+
+except Exception as e:
+    print(e)
